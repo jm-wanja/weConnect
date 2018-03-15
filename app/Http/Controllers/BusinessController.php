@@ -9,6 +9,12 @@ class BusinessController extends Controller
 {
     public function createBusiness(Request $request) 
     {
+        $this->validate($request, [
+            'title' => 'required|unique:business|max:20',
+            'description' => 'required|max:200',
+            'votes' => 'integer',
+            'verification' => 'boolean',
+        ]);
         $business = Business::create($request->all());
         return response()->json($business, 201);
     }
