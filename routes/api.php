@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Business;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,26 +14,30 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('business', function (Request $request) {
+    $resp = Business::create($request->all());
+    return $resp;
 });
 
 Route::get('business', function () {
-    return response(['business 1', 'business 2'], 200);
+    return response(Business::all(), 200);
 });
 
 Route::get('business/{id}', function ($businessId) {
-    return repsonse()->json(['businessId' => "{businessId}"], 200);
+    return response()->json(Business::find($businessId), 200);
 });
 
-Route::post('business', function () {
-    return response()->json(['message' => "Business created successfully!"], 201);
+Route::put('business/{id}', function (Request $request, $businessId) {
+    $business = Business::findOrFail($businessId);
+    $business->update($request->all());
+    return $business;
 });
 
-Route::put('business', function () {
-    return response()->json(['message' => "Business details updated!"], 200);
-});
-
-Route::delete('business', function () {
-    return response()->json(null, 204);
+Route::delete('business/{id}', function (Request $request, $businessId) {
+    Business::find($businessId)->delete();
+    return 204;
 });
