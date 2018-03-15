@@ -18,26 +18,12 @@ use App\Business;
 //     return $request->user();
 // });
 
-Route::post('business', function (Request $request) {
-    $resp = Business::create($request->all());
-    return $resp;
-});
+Route::post('business', 'BusinessController@createBusiness');
 
-Route::get('business', function () {
-    return response(Business::all(), 200);
-});
+Route::get('business', 'BusinessController@getAllBusinesses');
 
-Route::get('business/{id}', function ($businessId) {
-    return response()->json(Business::find($businessId), 200);
-});
+Route::get('business/{id}', 'BusinessController@getBusinessById');
 
-Route::put('business/{id}', function (Request $request, $businessId) {
-    $business = Business::findOrFail($businessId);
-    $business->update($request->all());
-    return $business;
-});
+Route::put('business/{id}', 'BusinessController@updateBusinessById');
 
-Route::delete('business/{id}', function (Request $request, $businessId) {
-    Business::find($businessId)->delete();
-    return 204;
-});
+Route::delete('business/{id}', 'BusinessController@deleteBusiness');
