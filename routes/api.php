@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Business;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,16 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
+
+Route::post('business', 'BusinessController@createBusiness');
+
+Route::get('business', 'BusinessController@getAllBusinesses');
+
+Route::get('business/{id}', 'BusinessController@getBusinessById');
+
+Route::put('business/{id}', 'BusinessController@updateBusinessById');
+
+Route::delete('business/{id}', 'BusinessController@deleteBusiness');
